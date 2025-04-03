@@ -130,6 +130,23 @@ func (client *VKClient) WallPost(ownerID int, message string, params url.Values)
 	return m["post_id"], nil
 }
 
+func (client *VKClient) WallPostDelete(postID int, ownerID int) error {
+
+	var params = url.Values{}
+
+	params.Set("owner_id", strconv.Itoa(ownerID))
+	params.Set("post_id", strconv.Itoa(postID))
+
+	_, err := client.MakeRequest("wall.delete", params)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+
 func (client *VKClient) WallPostComment(ownerID int, postID int, message string, params url.Values) (int, error) {
 	if params == nil {
 		params = url.Values{}
